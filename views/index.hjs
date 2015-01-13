@@ -1,0 +1,120 @@
+<html>
+<head>
+  <title>Redis Registration</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="/javascripts/jquery-2.1.1.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="/javascripts/angular/angular.min.js"></script>
+  <script src="/javascripts/angularjsapp.js"></script>
+  <script src="/javascripts/angular-smart-table/dist/smart-table.debug.js"></script>
+  <script src="/javascripts/ui-bootstrap-tpls-0.11.1.js"></script>
+  
+  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+</head>
+<body ng-app="RedisReg" ng-controller="MainCtrl">
+
+  <script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Attendee Info</h3>
+    </div>
+    <div class="modal-body">
+      <form ng-submit="ok()">
+        <div class="form-group">
+          <select ng-model="mevent" ng-init="setbefores()" ng-options="mevent.name for mevent in events" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <input type="text"
+          class="form-control"
+          placeholder="Name"
+          ng-model="modalname"
+          required></input>
+        </div>
+        <div class="form-group">
+          <input type="email"
+          class="form-control"
+          placeholder="Email"
+          ng-model="modalemail"
+          required></input>
+        </div>
+        <div class="form-group">
+          <input type="text"
+          class="form-control"
+          placeholder="Company Name"
+          ng-model="modalcompany"
+          required></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Info</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      </form>
+    </div>
+  </script>
+
+  <div class="row" style="margin-left:30px;">
+    <div class="page-header">
+      <h1>Redis Registration</h1>
+    </div>
+    <div class="col-md-4">
+      <form ng-submit="save()" style="margin-top:30px;">
+        <h3>Add a new attendee</h3>
+        <div class="form-group">
+          <select ng-model="myevent" ng-init="getlist()" ng-change="getlist()" ng-options="myevent.name for myevent in events" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <input type="text"
+          class="form-control"
+          placeholder="Name"
+          ng-model="attendeename"
+          required></input>
+        </div>
+        <div class="form-group">
+          <input type="email"
+          class="form-control"
+          placeholder="Email"
+          ng-model="attendeeemail"
+          required></input>
+        </div>
+        <div class="form-group">
+          <input type="text"
+          class="form-control"
+          placeholder="Company Name"
+          ng-model="attendeecompany"
+          required></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <button class="btn" ng-click="getemails()">Attendee Email List</button>
+      <h1>{[{myevent.name}]} Attendees</h1>
+      <table st-table="attendeelist" class="table table-striped">
+      <thead>
+        <tr>
+          <th st-ratio="15" st-sort="name">Name</th>
+          <th st-ratio="25" st-sort="email">Email</th>
+          <th st-ratio="15" st-sort="company">Company</th>
+          <th st-ratio="5" st-sort="company">Edit</th>
+          <th st-ratio="5" st-sort="delete">Delete?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="attendee in attendeelist">
+          <td st-ratio="15">{[{attendee.name}]}</td>
+          <td st-ratio="25">{[{attendee.email}]}</td>
+          <td st-ratio="15">{[{attendee.company}]}</td>
+          <td st-ratio="5">
+            <button type="button" ng-click="editattendee(attendee)" class="btn btn-sm btn-warning">
+              <i class="glyphicon glyphicon-edit"></i>
+            </button>
+          </td>
+          <td st-ratio="5">
+            <button type="button" ng-click="removeattendee(attendee)" class="btn btn-sm btn-danger">
+              <i class="glyphicon glyphicon-remove-circle"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </div>
+  </div>
+</body>
+</html>
